@@ -7,19 +7,17 @@
 using namespace std;
 
 void readList(payloadList* head) {
-    cout << "bruh" << endl;
-    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext())
+    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext()){
         cout << ptr->GetContent()->GetContent() << ": " << ptr->GetNext() << ": " << ptr->GetHead() << endl;
-    
-    cout << "bruh" << endl;
-};
+    }
+}
 
 void populateList(payloadList* list, int size){
     for (int i = 1; i < size*2; i+=2) {
         payload* p = new payload(i);
         list->push(p);
     }
-};
+}
 
 bool search(int search){
     for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext())
@@ -35,6 +33,7 @@ int main(int argc, char const *argv[])
     populateList(&list, size);
     readList(&list);
 
+    cout << "bruh2" << endl;
     cout << search(2) << " : " << search(3) << endl;
 
     /*
