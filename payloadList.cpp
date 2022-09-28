@@ -2,6 +2,7 @@
 
 payloadList::payloadList() {
     head = this;
+    ptr = nullptr;
     next = nullptr;
 }
 
@@ -14,6 +15,7 @@ void payloadList::SetNext(payloadList* n) { next = n; }
 payloadList* payloadList::GetHead() { return head; }
 
 void payloadList::push(payload* p) {
+    if (ptr == nullptr && head == nullptr) { ptr = p; return; }
     newElement = new payloadList();
     newElement->SetContents(p);
     newElement->SetNext(head);

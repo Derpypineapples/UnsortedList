@@ -12,10 +12,9 @@ void readList(payloadList* head) {
 };
 
 void populateList(payloadList* list, int size){
-    for (int i = 0; i < size; i++) {
+    for (int i = 1; i < size*2; i+=2) {
         payload* p = new payload(i);
-        if (i == 0) list->SetContents(p);
-        else list->push(p);
+        list->push(p);
     }
 };
 
