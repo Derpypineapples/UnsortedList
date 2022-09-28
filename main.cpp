@@ -6,12 +6,6 @@
 
 using namespace std;
 
-void readList(payloadList* head) {
-    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext()){
-        cout << ptr->GetContent()->GetContent() << ": " << ptr->GetNext() << ": " << ptr->GetHead() << endl;
-    }
-}
-
 void populateList(payloadList* list, int size){
     for (int i = 1; i < size*2; i+=2) {
         payload* p = new payload(i);
@@ -19,9 +13,21 @@ void populateList(payloadList* list, int size){
     }
 }
 
-bool search(int search){
-    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext())
-        if (ptr->GetContent()->GetContent() == search) return true;
+void readList(payloadList* head) {
+    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext()){
+        cout << ptr->GetContent()->GetContent() << ": " << ptr->GetNext() << ": " << ptr->GetHead() << endl;
+    }
+}
+
+bool search(payloadList* head, int search){
+    cout << "Searching: " << search << endl;
+    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext()) {
+        if (ptr->GetContent()->GetContent() == search){
+            cout << "Search Successful" << endl;
+            return true;
+        }
+    }
+    cout << "Search Unsuccessful" << endl;
     return false;
 }
 
@@ -32,9 +38,7 @@ int main(int argc, char const *argv[])
 
     populateList(&list, size);
     readList(&list);
-
-    cout << "bruh2" << endl;
-    cout << search(2) << " : " << search(3) << endl;
+    cout << search(&list, 3) << endl;
 
     /*
     ifstream inFile;
