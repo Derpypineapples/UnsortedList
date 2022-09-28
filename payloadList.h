@@ -17,6 +17,8 @@ class payloadList{
 
     void push(payload* p);
 
+    bool hasNext();
+
     private:
     payload* ptr;
     payloadList* newElement;

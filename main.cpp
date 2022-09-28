@@ -34,12 +34,7 @@ bool search(payloadList* head, int search){
 
 int main(int argc, char const *argv[])
 {
-    //const int size = 10;
     payloadList list;
-
-    //populateList(&list, size);
-    //readList(&list);
-    //cout << search(&list, 3) << endl;
 
     ifstream inFile;
     ofstream outFile;
@@ -50,6 +45,9 @@ int main(int argc, char const *argv[])
 
     for (int count = 1; command != "Quit"; count++){
         //Commands
+        inFile >> command;
+
+        //Build List
         if (command == "build") {
             int size;
             inFile >> size;
@@ -58,22 +56,27 @@ int main(int argc, char const *argv[])
                 inFile >> num;
                 payload* p = new payload(num);
                 list.push(p);
-                outFile << "Pushing " << num << " to list" << endl;
+                outFile << "Pushing \"" << num << "\" to list" << endl;
             }
         }
+
+        //Print list
         else if (command == "print") {
             outFile << "Built list: [";
 
-            for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext())
-                outFile << ptr->GetContent()->GetContent() << ", ";
+            for (payloadList* ptr = list.GetHead(); ptr != NULL; ptr = ptr->GetNext()){
+                outFile << ptr->GetContent()->GetContent();
+                if (ptr->hasNext()) outFile << ", ";
+            }
                 
             outFile << "]" << endl;
         }
+
+        //Search for element in list
         else if (command == "search") { outFile << "search" << endl; }
         else { outFile << "Command " << command << " does not exist" << endl; }
 
         cout << "Test " << count << " Completed" << endl;
-        inFile >> command;
     }
     
     cout << "All Tests Completed" << endl;

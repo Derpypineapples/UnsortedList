@@ -22,6 +22,8 @@ void payloadList::push(payload* p) {
     head = newElement;
 }
 
+bool payloadList::hasNext() { return (next != NULL); }
+
 payload* ptr;
 payloadList* newElement;
 payloadList* next;
