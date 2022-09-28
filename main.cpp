@@ -7,8 +7,11 @@
 using namespace std;
 
 void readList(payloadList* head) {
+    cout << "bruh" << endl;
     for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext())
         cout << ptr->GetContent()->GetContent() << ": " << ptr->GetNext() << ": " << ptr->GetHead() << endl;
+    
+    cout << "bruh" << endl;
 };
 
 void populateList(payloadList* list, int size){
@@ -18,6 +21,12 @@ void populateList(payloadList* list, int size){
     }
 };
 
+bool search(int search){
+    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext())
+        if (ptr->GetContent()->GetContent() == search) return true;
+    return false;
+}
+
 int main(int argc, char const *argv[])
 {
     const int size = 10;
@@ -25,6 +34,8 @@ int main(int argc, char const *argv[])
 
     populateList(&list, size);
     readList(&list);
+
+    cout << search(2) << " : " << search(3) << endl;
 
     /*
     ifstream inFile;
