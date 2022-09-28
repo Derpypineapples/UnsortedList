@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #include "payload.cpp"
 #include "payloadList.cpp"
@@ -33,14 +34,13 @@ bool search(payloadList* head, int search){
 
 int main(int argc, char const *argv[])
 {
-    const int size = 10;
+    //const int size = 10;
     payloadList list;
 
-    populateList(&list, size);
-    readList(&list);
-    cout << search(&list, 3) << endl;
+    //populateList(&list, size);
+    //readList(&list);
+    //cout << search(&list, 3) << endl;
 
-    /*
     ifstream inFile;
     ofstream outFile;
     string command;
@@ -48,9 +48,38 @@ int main(int argc, char const *argv[])
     inFile.open("test");
     outFile.open("out");
 
+    for (int count = 1; command != "Quit"; count++){
+        //Commands
+        if (command == "build") {
+            int size;
+            inFile >> size;
+            for (int i = 0; i < size; i++) {
+                int num;
+                inFile >> num;
+                payload* p = new payload(num);
+                list.push(p);
+                outFile << "Pushing " << num << " to list" << endl;
+            }
+        }
+        else if (command == "print") {
+            outFile << "Built list: [";
+
+            for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext())
+                outFile << ptr->GetContent()->GetContent() << ", ";
+                
+            outFile << "]" << endl;
+        }
+        else if (command == "search") { outFile << "search" << endl; }
+        else { outFile << "Command " << command << " does not exist" << endl; }
+
+        cout << "Test " << count << " Completed" << endl;
+        inFile >> command;
+    }
+    
+    cout << "All Tests Completed" << endl;
+
     inFile.close();
     outFile.close();
-    */
 
     return 0;
 }
