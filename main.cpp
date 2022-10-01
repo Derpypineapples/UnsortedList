@@ -1,33 +1,10 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 
 #include "payload.cpp"
 #include "payloadList.cpp"
 
 using namespace std;
-/*
-void populateList(payloadList* list, int size){
-    for (int i = 1; i < size*2; i+=2) {
-        payload* p = new payload(i);
-        list->push(p);
-    }
-}
-*/
-void printList(payloadList* head) {
-    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext()){
-        cout << ptr->GetContent()->GetContent();
-        if (ptr->hasNext()) cout << ", ";
-    }
-}
-
-
-bool search(payloadList* head, int search){
-    for (payloadList* ptr = head->GetHead(); ptr != NULL; ptr = ptr->GetNext()) {
-        if (ptr->GetContent()->GetContent() == search) return true;
-    }
-    return false;
-}
 
 int main(int argc, char const *argv[])
 {
@@ -37,55 +14,76 @@ int main(int argc, char const *argv[])
     ofstream outFile;
     string command;
 
-    inFile.open("test");
-    outFile.open("out");
+    inFile.open("test.txt");
+    outFile.open("out.txt");
 
     inFile >> command;
-
     for (int count = 1; command != "Quit"; count++){
         //Commands
 
         //Build List
-        if (command == "build") {
+        if (command == "push") {
             int size;
-            list = payloadList();
             inFile >> size;
             for (int i = 0; i < size; i++) {
-                int num;
-                inFile >> num;
-                payload* p = new payload(num);
-                list.push(p);
-                outFile << "Pushing \"" << num << "\" to list" << endl;
+                string format;
+                string name;
+                string status;
+                float gpa;
+                int id;
+                payload* p;
+
+                inFile >> format;
+                if (format == "full") {
+                    inFile >> name >> status >> gpa >> id;
+                    p = new payload (name, status, gpa, id);
+                }
+                else if (format == "part") {
+                    inFile >> name >> id;
+                    p = new payload (name, id);
+                }
+
+                if (list.hasNext() && (&list, id)) {
+                    outFile << "Push Failed, ID \"" << id << "\" Already Exists" << endl;
+                }
+                else {
+                    list.push(p);
+                    outFile << "Pushing \"" << name << ":" << id << "\" to list" << endl;
+                }
             }
+        }
+
+        //Delete Element
+        else if (command == "delete") {
+            int id;
+            inFile >> id;
+            outFile << "Deleting \"" << id << "\"" << endl;
+            list.del(id);
         }
 
         //Print list
         else if (command == "print") {
-            printList(&list);
-            for (payloadList* ptr = list.GetHead(); ptr != NULL; ptr = ptr->GetNext()) {
-                cout << "Committing " << ptr->GetContent()->GetContent();
-            }
-            /*
             outFile << "Built List: [";
             for (payloadList* ptr = list.GetHead(); ptr != NULL; ptr = ptr->GetNext()) {
-                cout << ptr->GetContent()->GetContent() << " ";
-                outFile << ptr->GetContent()->GetContent();
+                outFile << ptr->GetContent()->GetName() << ":" << ptr->GetContent()->GetID();
                 if (ptr->hasNext()) outFile << ", ";
             }
-            outFile << "]";
-            */
+            outFile << "]" << endl;
         }
 
         //Search for element in list
         else if (command == "search") {
             int srch;
             inFile >> srch;
-            if (search(&list, srch)) outFile << "Search Successful, \"" << srch << "\" found" << endl;
+            //if (srch != NULL && search(&list, srch)) outFile << "Search Succ essful, \"" << srch << "\" found" << endl;
+            if (list.search(srch)) outFile << "Search Successful, \"" << srch << "\" found" << endl;
             else outFile << "Search Unsuccessful, \"" << srch << "\" not found" << endl;
         }
+        
+        else if (command == "") { /*Do nothing*/ }
         else outFile << "Command " << command << " does not exist" << endl;
 
-        cout << "Test " << count << " Completed" << endl;
+        cout << "Test " << count << " Completed" << " : " << command  << endl;
         inFile >> command;
     }
     
