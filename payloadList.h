@@ -6,6 +6,7 @@
 class payloadList{
     public:
     payloadList();
+    ~payloadList();
 
     payload* GetContent();
     void SetContents(payload* p);
@@ -16,8 +17,10 @@ class payloadList{
     payloadList* GetHead();
 
     void push(payload* p);
+    void del(int id);
 
     bool hasNext();
+    bool search(int id);
 
     private:
     payload* ptr;
